@@ -1,0 +1,8 @@
+{
+    "cleanUrls" :true,
+    "routes" : [
+        {"src" : "/", "dest" : "/index.html" },
+        {"src" : "/bulk-index", "dest" : "/bulk-index.html"}
+    ]
+
+}
