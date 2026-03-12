@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ascella Bulk Password Engine</title>
-    <link rel="stylesheet" href="bulk-style.css" />
+    <link rel="stylesheet" href="./css/bulk-style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -14,7 +14,7 @@
     <div class="container">
       <header class="page-header">
         <div class="logo">
-          <svg
+          <!-- <svg
             width="40"
             height="40"
             viewBox="0 0 24 24"
@@ -27,8 +27,12 @@
             <path
               d="M12 2L8 6H4v4l-2 2 2 2v4h4l4 4 4-4h4v-4l2-2-2-2V6h-4L12 2z"
             />
-          </svg>
+          </svg> -->
+          <div class="logo">
+            <img src="./assets/logo.svg" alt="logo" />
+          </div>
         </div>
+
         <h1>Ascella Bulk Password Engine</h1>
         <p>
           Ascella Bulk Password Engine is designed for teams, administrators,
@@ -52,7 +56,7 @@
                 <input
                   type="number"
                   id="length-val"
-                  value="23"
+                  value="16"
                   min="4"
                   max="128"
                   readonly
@@ -109,7 +113,7 @@
                 <input
                   type="number"
                   id="qty-val"
-                  value="10"
+                  value="2"
                   min="1"
                   max="100"
                   readonly
@@ -235,6 +239,6 @@
       </section>
     </div>
 
-    <script src="bulk-script.js"></script>
+    <script src="./js/bulk-script.js"></script>
   </body>
 </html>
