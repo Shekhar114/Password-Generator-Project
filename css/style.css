@@ -293,7 +293,11 @@ body {
     background: var(--card-bg);
     padding: 30px;
     border-radius: 8px;
-    border: 1px solid #1f1f1f;
+    border: 1px solid #1f1f1f;  
+}
+
+.card:hover{
+    transform: scale(1.08);
 }
 
 .card h3 {
@@ -327,7 +331,10 @@ body {
 }
 
 .mock-input.success {
-    border-color: rgba(74, 222, 128, 0.3);
+    /* border-color: rgba(74, 222, 128, 0.3); */
+    background-color: rgb(50, 197, 43, 0.15);
+    border : 1px solid #32C52B;
+    
 }
 
 .success-text {
@@ -342,18 +349,24 @@ body {
 
 .mock-input.default {
     border-color: #333;
+    display: block;
 }
 
 .default-text {
-    color: var(--text-muted);
+    color: white;
     font-size: 11px;
     margin-top: 10px;
     font-family: var(--font-family);
+    display: block;
 }
 
-.highlight {
-    background: rgba(255, 255, 255, 0.1);
+#highlight {
+    background-color: rgb(50, 197, 43, 0.15);
     padding: 0 2px;
+    background-color: rgb(50, 197, 43, 0.15);
+    border : 1px solid #32C52B;
+    border-radius: 5px;
+
 }
 
 .mock-input-stack {
@@ -404,6 +417,11 @@ body {
     margin-bottom: 40px;
 }
 
+.recommendation-box:hover{
+    transform: scale(1.08);
+}
+
+
 .recommendation-box h3 {
     font-size: 18px;
     margin-bottom: 10px;
@@ -423,6 +441,7 @@ body {
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 @media (max-width: 900px) {
