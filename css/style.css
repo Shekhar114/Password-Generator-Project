@@ -20,9 +20,12 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     font-family: var(--font-family);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    /* line-height: 1.6; */
+    /* -webkit-font-smoothing: antialiased; */
+    
 }
+
+
 
 .container {
     max-width: 1100px;
@@ -51,16 +54,17 @@ body {
 }
 
 .page-header h1 {
-    font-size: 32px;
-    font-weight: 600;
+    font-size: 36px;
+    font-weight: 500;
     margin-bottom: 16px;
-    letter-spacing: -0.5px;
+    letter-spacing: -2%;
 }
 
 .page-header p {
-    color: var(--text-muted);
+    color: white;
     font-size: 14px;
     line-height: 1.8;
+    letter-spacing: -2%;
 }
 
 /* Generator Section */
@@ -86,10 +90,10 @@ body {
     border: none;
     color: var(--text-main);
     font-size: 36px;
-    font-weight: 600;
+    /* font-weight: 600; */
     width: 100%;
     outline: none;
-    font-family: monospace;
+    /* font-family: monospace; */
     letter-spacing: 1px;
 }
 
@@ -102,7 +106,7 @@ body {
 #refresh-btn {
     background: transparent;
     border: none;
-    color: var(--text-muted);
+    color: white;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -110,8 +114,11 @@ body {
 }
 
 #refresh-btn:hover {
-    color: var(--text-main);
+    /* color: var(--text-main); */
+    transform: scale(1.2);
+    /* transform: rotate(50deg); */
 }
+
 
 #copy-btn {
     background: var(--text-main);
@@ -179,7 +186,7 @@ body {
 
 .control-group label {
     font-size: 12px;
-    color: var(--text-muted);
+    color: white;
 }
 
 .stepper {
@@ -319,7 +326,6 @@ body {
     border: 1px solid #222;
     padding: 15px;
     border-radius: 6px;
-    font-family: monospace;
     font-size: 13px;
     color: var(--text-main);
     margin-bottom: 20px;
@@ -336,6 +342,7 @@ body {
     border : 1px solid #32C52B;
     
 }
+
 
 .success-text {
     color: var(--success);
@@ -376,6 +383,8 @@ body {
     margin-bottom: 20px;
 }
 
+
+
 .mock-input.mini {
     padding: 10px 15px;
     align-items: flex-start;
@@ -403,7 +412,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    color: #aaaaaa;
+    /* color: #aaaaaa; */
+    color: white;
     font-size: 14px;
     margin-bottom: 40px;
     max-width: 900px;
@@ -428,7 +438,7 @@ body {
 }
 
 .recommendation-box p {
-    color: var(--text-muted);
+    color: white;
     font-size: 14px;
 }
 
@@ -443,6 +453,8 @@ body {
     cursor: pointer;
     text-decoration: none;
 }
+
+
 
 @media (max-width: 900px) {
     .cards-grid {
