@@ -55,6 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
   handleStepper(lengthVal, lengthDec, lengthInc);
   handleStepper(qtyVal, qtyDec, qtyInc);
 
+  // Global strength variable to tie both badge and crack time together
+  let strengthText = "";
+
   // Dynamic Strength Badge Logic
   function updateStrengthBadge(length) {
     let checkedCount = 0;
@@ -63,24 +66,25 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cbDigits.checked) checkedCount++;
     if (cbSpecial.checked) checkedCount++;
 
-    let strengthText = "";
     const shieldSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
 
-    // 0. Bad : Nothing checked
-    if (checkedCount === 0) strengthText = "Bad";
-    // 1. Weak: Nothing checked OR length is too short (< 8)
-    else if (checkedCount > 0 && length < 8) {
-      strengthText = "Weak";
+    // 1. Bad: Length is under 8 chars OR nothing is checked (relying on default fallback)
+    if (length < 8 || checkedCount === 0) {
+      strengthText = "Bad";
     }
-    // 2. Very Strong: All 4 character type checkboxes checked AND length > 50
+    // 2. Very Strong: All 4 character types checked AND length > 50
     else if (checkedCount === 4 && length > 50) {
       strengthText = "Very Strong";
     }
-    // 3. Strong: At least 2 checkboxes checked AND length >= 12
+    // 3. Strong: At least 2 checkboxes checked AND length >= 16
     else if (checkedCount >= 2 && length >= 16) {
       strengthText = "Strong";
     }
-    // 4. Good: Any other valid combination
+    // 4. Weak: Length is short (8-11) or only 1 character type is checked
+    else if (length < 12 || checkedCount === 1) {
+      strengthText = "Weak";
+    }
+    // 5. Good: Any other valid combination
     else {
       strengthText = "Good";
     }
@@ -88,6 +92,33 @@ document.addEventListener("DOMContentLoaded", () => {
     if (strengthBadge) {
       strengthBadge.innerHTML = `${shieldSvg} ${strengthText}`;
     }
+  }
+
+  // Rough Crack Time Estimation (Strictly mapped to strengthText)
+  function updateCrackTime() {
+    let estimate = "";
+
+    switch (strengthText) {
+      case "Bad":
+        estimate = "A few seconds";
+        break;
+      case "Weak":
+        estimate = "8 Minutes";
+        break;
+      case "Good":
+        estimate = "180 days";
+        break;
+      case "Strong":
+        estimate = "Centuries";
+        break;
+      case "Very Strong":
+        estimate = "Millennia";
+        break;
+      default:
+        estimate = "Unknown";
+    }
+
+    crackTimeDisplay.textContent = `Estimated Time to Crack: ${estimate}`;
   }
 
   // Single Password Generator
@@ -177,18 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
       bulkDisplay.appendChild(pwdElement);
     }
 
-    updateCrackTime(length, activeSets.length);
-    updateStrengthBadge(length); // Update strength dynamically based on new batch
-  }
-
-  function updateCrackTime(length, setsCount) {
-    let estimate = "";
-    if (length < 8) estimate = "* Minutes";
-    else if (length < 15 && setsCount <= 1) estimate = " 180 Days";
-    else if (length <= 50) estimate = "Centuries";
-    else estimate = "Centuries";
-
-    crackTimeDisplay.textContent = `Estimated Time to Crack: ${estimate}`;
+    // Ensure Strength evaluates BEFORE Crack Time is requested
+    updateStrengthBadge(length);
+    updateCrackTime();
   }
 
   // Copy to Clipboard (All Passwords)
