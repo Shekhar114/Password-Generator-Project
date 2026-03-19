@@ -4,13 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const refreshBtn = document.getElementById("refresh-btn");
   const copyBtn = document.getElementById("copy-btn");
   const crackTimeDisplay = document.getElementById("crack-time");
-  const strengthBadge = document.querySelector(".badge-strong");
+  const strengthBadge = document.querySelector(".badge-strong") || document.querySelector(".badge"); 
 
-  // Steppers
-  const lengthVal = document.getElementById("length-val");
-  const lengthDec = document.getElementById("length-dec");
-  const lengthInc = document.getElementById("length-inc");
+  // Slider Elements
+  const lengthSlider = document.getElementById("length-slider");
+  const lengthDisplayText = document.getElementById("length-display-text");
+  const sliderDecBtn = document.getElementById("slider-dec");
+  const sliderIncBtn = document.getElementById("slider-inc");
 
+  // Quantity Stepper
   const qtyVal = document.getElementById("qty-val");
   const qtyDec = document.getElementById("qty-dec");
   const qtyInc = document.getElementById("qty-inc");
@@ -31,41 +33,19 @@ document.addEventListener("DOMContentLoaded", () => {
     ambiguous: "0Oo1l|I",
   };
 
-  // Stepper Logic for Length
-  function handleLengthStepper() {
-    lengthDec.addEventListener("click", () => {
-      let val = parseInt(lengthVal.value);
-      if (val > parseInt(lengthVal.min)) {
-        lengthVal.value = val - 1;
-        generatePassword();
-      }
-    });
-
-    lengthInc.addEventListener("click", () => {
-      let val = parseInt(lengthVal.value);
-      if (val < parseInt(lengthVal.max)) {
-        lengthVal.value = val + 1;
-        generatePassword();
-      }
-    });
-  }
-  handleLengthStepper();
-
   // Redirect Logic for Quantity (Number of Passwords)
   qtyInc.addEventListener("click", () => {
-    // Redirect to the bulk generator page when trying to increase past 1
     window.location.href = "bulk-index.html";
   });
 
   qtyDec.addEventListener("click", () => {
-    // Keep at 1, since this is the single password generator page
-    qtyVal.value = 1;
+    qtyVal.value = 1; // Keep at 1
   });
 
   // Global strength variable
   let strengthText = "";
 
-  // Dynamic Strength Badge Logic
+  // Dynamic Strength Badge Logic 
   function updateStrengthBadge(length) {
     let checkedCount = 0;
     if (cbUpper.checked) checkedCount++;
@@ -75,31 +55,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const shieldSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
 
-    // 1. Bad: Length is under 8 chars OR nothing is checked (relying on default fallback)
+    // Evaluate Strength Level
     if (length < 8 || checkedCount === 0) {
       strengthText = "Bad";
     }
-    // 2. Very Strong: All 4 character types checked AND length > 50
-    else if (checkedCount === 4 && length > 50) {
+    else if (checkedCount === 4 && length >= 20) {
       strengthText = "Very Strong";
     }
-    // 3. Strong: At least 2 checkboxes checked AND length >= 16
     else if (checkedCount >= 2 && length >= 16) {
       strengthText = "Strong";
     }
-    // 4. Weak: Length is short (8-11) or only 1 character type is checked
     else if (length < 12 || checkedCount === 1) {
       strengthText = "Weak";
     }
-    // 5. Good: Any other valid combination (e.g., length 12-15 with multiple checked)
     else {
       strengthText = "Good";
     }
 
-    strengthBadge.innerHTML = `${shieldSvg} ${strengthText}`;
+    // Update the Text and Icon
+    if(strengthBadge) {
+      strengthBadge.innerHTML = `${shieldSvg} ${strengthText}`;
+
+      // Reset any dynamic classes previously added
+      strengthBadge.classList.remove("badge-bad", "badge-weak", "badge-good", "badge-strong", "badge-very-strong");
+
+      // Apply the correct class based on the text
+      if (strengthText === "Bad" || strengthText === "Weak") {
+          strengthBadge.classList.add("badge-weak");
+      } else if (strengthText === "Good") {
+          strengthBadge.classList.add("badge-good");
+      } else if (strengthText === "Strong") {
+          strengthBadge.classList.add("badge-strong");
+      } else if (strengthText === "Very Strong") {
+          strengthBadge.classList.add("badge-very-strong");
+      }
+    }
   }
 
-  // Rough Crack Time Estimation (Now strictly mapped to strengthText)
+  // Rough Crack Time Estimation
   function updateCrackTime() {
     let estimate = "";
 
@@ -111,13 +104,13 @@ document.addEventListener("DOMContentLoaded", () => {
         estimate = "8 Minutes";
         break;
       case "Good":
-        estimate = "180 days";
+        estimate = "2 Years";
         break;
       case "Strong":
-        estimate = "Centuries";
+        estimate = "150 Years";
         break;
       case "Very Strong":
-        estimate = "Millennia";
+        estimate = "Centuries";
         break;
       default:
         estimate = "Unknown";
@@ -128,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Generator Logic
   function generatePassword() {
-    const length = parseInt(lengthVal.value);
+    const length = parseInt(lengthSlider.value);
     let charPool = "";
     let password = "";
 
@@ -151,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
       activeSets.push(CHAR_SETS.special);
     }
 
-    // Default Fallback: If no sets are selected, generate a lowercase password anyway
+    // Default Fallback
     if (charPool.length === 0) {
       charPool = CHAR_SETS.lower;
       activeSets.push(CHAR_SETS.lower);
@@ -165,7 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .filter((char) => !ambiguousArray.includes(char))
         .join("");
 
-      // Re-filter active sets so guaranteed chars aren't ambiguous
       activeSets = activeSets.map((set) =>
         set
           .split("")
@@ -188,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
       password += randomChar;
     }
 
-    // Shuffle the password so the guaranteed characters aren't always at the front
+    // Shuffle the password
     password = password
       .split("")
       .sort(() => 0.5 - Math.random())
@@ -198,29 +190,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Evaluate Strength and Update UI
     updateStrengthBadge(length);
-    updateCrackTime(); // Now relies purely on strengthText set by the line above
+    updateCrackTime(); 
   }
+
+  // --- SLIDER & BUTTON LOGIC ---
+  
+  // Visual update logic for the slider
+  function updateSliderVisuals() {
+    lengthDisplayText.textContent = lengthSlider.value;
+    
+    // Calculate percentage for the white background fill
+    const percentage = ((lengthSlider.value - lengthSlider.min) / (lengthSlider.max - lengthSlider.min)) * 100;
+    
+    // Create the white line fill effect
+    lengthSlider.style.background = `linear-gradient(to right, #ffffff ${percentage}%, #333333 ${percentage}%)`;
+    
+    // Generate new password
+    generatePassword();
+  }
+
+  // Listen for manual slider drags
+  lengthSlider.addEventListener("input", updateSliderVisuals);
+
+  // Minus Button Click
+  sliderDecBtn.addEventListener("click", () => {
+    let currentValue = parseInt(lengthSlider.value);
+    let min = parseInt(lengthSlider.min);
+    
+    if (currentValue > min) {
+      lengthSlider.value = currentValue - 1;
+      updateSliderVisuals();
+    }
+  });
+
+  // Plus Button Click
+  sliderIncBtn.addEventListener("click", () => {
+    let currentValue = parseInt(lengthSlider.value);
+    let max = parseInt(lengthSlider.max);
+    
+    if (currentValue < max) {
+      lengthSlider.value = currentValue + 1;
+      updateSliderVisuals();
+    }
+  });
 
   // Copy to Clipboard
   copyBtn.addEventListener("click", () => {
     if (!passwordDisplay.value) return;
 
     navigator.clipboard.writeText(passwordDisplay.value).then(() => {
-      const originalText = copyBtn.textContent;
-      copyBtn.textContent = "Copied!";
+      const originalText = copyBtn.innerHTML;
+      copyBtn.innerHTML = `Copied! <i class="fa-solid fa-check"></i>`;
       setTimeout(() => {
-        copyBtn.textContent = originalText;
+        copyBtn.innerHTML = originalText;
       }, 1000);
     });
   });
 
-  // Event Listeners for controls
+  // Event Listeners for checkboxes
   [cbUpper, cbLower, cbDigits, cbSpecial, cbExclude].forEach((checkbox) => {
     checkbox.addEventListener("change", generatePassword);
   });
 
   refreshBtn.addEventListener("click", generatePassword);
 
-  // Initial Generation
-  generatePassword();
+  // Initial setup on load
+  updateSliderVisuals();
 });

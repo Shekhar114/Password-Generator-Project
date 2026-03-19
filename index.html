@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Advanced Password Generator</title>
     <link rel="stylesheet" href="./css/style.css" />
-    <!-- <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    /> -->
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   </head>
 
   <body>
     <div class="container">
       <header class="page-header">
         <div class="logo">
-          <div class="logo">
-            <img src="Assets/logo.svg" alt="logo" />
-          </div>
+          <img src="Assets/logo.svg" alt="logo" />
         </div>
 
         <h1>Advanced Password Generator by Ascella</h1>
@@ -32,79 +32,42 @@
 
       <section class="generator-section">
         <div class="generator-box">
-          <div class="display-container">
+          <div class="display-container">  
             <input type="text" id="password-display" readonly />
             <div class="display-actions">
-              <!-- <button id="refresh-btn" title="Generate New Password">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M21 2v6h-6" />
-                  <path d="M3 11a9 9 0 1 0 2.13-5.83L2 12" />
-                </svg>
-              </button> -->
-              <button id="refresh-btn" title="Generate New Password">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
-                  <path d="M21 3v5h-5" />
-                </svg>
+              <button id="refresh-btn">
+                <i class="fa-solid fa-arrows-rotate fa-lg"></i>
               </button>
-              <button id="copy-btn">Copy</button>
+              <button id="copy-btn">
+                 Copy <i class="fa-regular fa-copy"></i>
+              </button>
             </div>
-          </div>
-
+          </div> 
+          
           <div class="badges">
             <span class="badge badge-strong">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 <polyline points="9 12 11 14 15 10" />
               </svg>
               Strong
             </span>
-            <span class="badge badge-dark" id="crack-time"
-              >Estimated Time to Crack: Centuries</span
-            >
+            <span class="badge badge-dark" id="crack-time">
+              Estimated Time to Crack: Centuries
+            </span>
           </div>
 
           <div class="controls-container">
-            <p class="controls-title">Strengthen Your Password with......</p>
+            <p class="controls-title">Strengthen Your Password with Ascella</p>
 
             <div class="controls-grid">
+              
               <div class="control-group">
-                <label>Length</label>
+                <label>Number of Passwords</label>
                 <div class="stepper">
-                  <button id="length-dec">-</button>
-                  <input
-                    type="number"
-                    id="length-val"
-                    value="16"
-                    min="4"
-                    max="64"
-                    readonly
-                  />
-                  <button id="length-inc">+</button>
+                  <button id="qty-dec">-</button>
+                  <input type="number" id="qty-val" value="1" min="1" max="5" readonly />
+                  <button id="qty-inc">+</button>
                 </div>
               </div>
 
@@ -116,6 +79,7 @@
                   <span class="checkmark"></span>
                 </label>
               </div>
+              
               <div class="control-group">
                 <label>Lowercase</label>
                 <label class="toggle-pill" for="cb-lower">
@@ -124,6 +88,7 @@
                   <span class="checkmark"></span>
                 </label>
               </div>
+              
               <div class="control-group">
                 <label>Digits</label>
                 <label class="toggle-pill" for="cb-digits">
@@ -132,6 +97,7 @@
                   <span class="checkmark"></span>
                 </label>
               </div>
+              
               <div class="control-group">
                 <label>Special Case</label>
                 <label class="toggle-pill" for="cb-special">
@@ -140,6 +106,7 @@
                   <span class="checkmark"></span>
                 </label>
               </div>
+              
               <div class="control-group">
                 <label>Easy to Read</label>
                 <label class="toggle-pill" for="cb-exclude">
@@ -148,24 +115,69 @@
                   <span class="checkmark"></span>
                 </label>
               </div>
+            </div>
 
-              <div class="control-group">
-                <label>Number of Password</label>
-                <div class="stepper">
-                  <button id="qty-dec">-</button>
-                  <input
-                    type="number"
-                    id="qty-val"
-                    value="1"
-                    min="1"
-                    max="50"
-                    readonly
-                  />
-                  <button id="qty-inc">+</button>
+            <!-- <div class="control-group length-slider-group" style="margin-top: 40px;">
+              <label style="display: flex; justify-content: space-between;">
+                <span>Length</span>
+                <span id="length-display-text" style="color: var(--text-main); font-weight: 600;">16</span>
+              </label>
+              <div class="slider-container">
+                <input type="range" id="length-slider" min="4" max="72" value="16" step="1" />
+                <div class="slider-labels">
+                  <span>4</span>
+                  <span>10</span>
+                  <span>16</span>
+                  <span>24</span>
+                  <span>30</span>
+                  <span>36</span>
+                  <span>42</span>
+                  <span>48</span>
+                  <span>54</span>
+                  <span>60</span>
+                  <span>66</span>
+                  <span>72</span>
+
                 </div>
               </div>
+            </div> -->
+
+            <div class="control-group length-slider-group" style="margin-top: 40px;">
+              <label style="display: flex; column-gap: 0.8%; margin-bottom: 10px; ">
+                <span style="font-size: 12px;">Length</span>
+                <span id="length-display-text" style="color: var(--text-main); font-weight: 600; font-size: 12px;">16</span>
+              </label>
+              
+              <div class="slider-with-buttons">
+                <button id="slider-dec" class="slider-btn">-</button>
+                
+                <div class="slider-container">
+                  <input type="range" id="length-slider" min="4" max="72" value="16" step="1" />
+                <div class="slider-labels">
+                  <span>4</span>
+                  <span>10</span>
+                  <span>16</span>
+                  <span>24</span>
+                  <span>30</span>
+                  <span>36</span>
+                  <span>42</span>
+                  <span>48</span>
+                  <span>54</span>
+                  <span>60</span>
+                  <span>66</span>
+                  <span>72</span>
+                </div>
+                </div>
+
+                <button id="slider-inc" class="slider-btn">+</button>
+              </div>
             </div>
+
+            
           </div>
+          
+          <br>
+          <a href="bulk-index.html" class="btn-bulk"> Generate Bulk Passwords </a>
         </div>
       </section>
 
@@ -176,21 +188,14 @@
             <h3>LENGTH</h3>
             <div class="mock-input success">
               (jKbaUYSB68292@$^SHWshs)
-              <span class="success-text"
-                ><svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
+              <span class="success-text">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                Secured Password</span
-              >
+                Secured Password
+              </span>
             </div>
-            <p style="color:white">
+            <p>
               Long passwords dramatically increase the number of possible
               character combinations. When a password contains many characters,
               automated attack tools require significantly more time to guess
@@ -204,7 +209,7 @@
               (jKbaUYSB6<span id="highlight">8292@$^S</span>HWshs)
               <span class="default-text">Random Combination</span>
             </div>
-            <p style="color:white">
+            <p>
               A secure password should combine different character types
               including letters, numbers, and symbols. This mixture removes
               patterns that attackers typically exploit when trying to guess
@@ -229,7 +234,7 @@
                 (KSK261#%@msuw#5USAB)
               </div>
             </div>
-            <p style="color:white">
+            <p>
               Every online account should have a completely different password.
               When the same password is reused across multiple websites, one
               compromised service can expose all connected accounts. Creating
@@ -243,19 +248,19 @@
       <section class="info-section bottom-info">
         <h2>Why Password Security Is Critical</h2>
         <div class="text-content">
-          <p style="color:white">
+          <p>
             Cyber attacks targeting login credentials are extremely common in
             today's digital environment. Attackers often rely on automated
             scripts that test millions of password combinations against large
             databases of accounts.
           </p>
-          <p style="color:white">
+          <p>
             If a password is short, predictable, or reused across platforms, it
             becomes much easier for attackers to gain unauthorized access. Once
             inside an account, criminals may steal sensitive information,
             conduct financial fraud, or exploit personal data.
           </p>
-          <p style="color:white">
+          <p>
             Using a secure password generator to create random and complex
             passwords significantly reduces the chances of unauthorized access.
             Strong passwords form the first line of defense in protecting your
@@ -265,15 +270,13 @@
 
         <div class="recommendation-box">
           <h3>Security Recommendation</h3>
-          <p style="color:white">
+          <p>
             Use a password manager alongside a random password generator to
             store your credentials safely. This approach allows you to maintain
             strong, unique passwords for every account without needing to
             memorize them.
           </p>
         </div>
-
-        <a href="bulk-index.html" class="btn-bulk"> Generate Bulk Passwords </a>
       </section>
     </div>
 
