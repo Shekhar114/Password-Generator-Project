@@ -19,6 +19,7 @@
 body {
     background-color: var(--bg-color);
     font-family: var(--font-family);
+    text-align: center;
 }
 
 .container {
@@ -26,7 +27,7 @@ body {
     margin: 0 auto;
     padding-top: 5vh;
     padding-bottom: 5vh;
-    text-align: center;
+    
 }
 
 /* Header */
@@ -46,7 +47,7 @@ body {
 }
 
 .page-header h1 {
-    font-size: 32px;
+    font-size: 32;
     font-weight: 500;
     margin-bottom: 16px;
     letter-spacing: -2%;
@@ -54,8 +55,8 @@ body {
 
 .page-header p {
     color: rgba(255, 255, 255);
-    font-size: 14px;
-    line-height: 1.8;
+    font-size: 12px;
+    line-height: 20px;
 }
 
 /* Generator Section */
@@ -80,10 +81,10 @@ body {
     background: transparent;
     border: none;
     color: var(--text-main);
-    font-size: 32px;
+    font-size: 28px;
     width: 100%;
     outline: none;
-    letter-spacing: -1px;
+    letter-spacing: -2px;
     line-height: 48px;
 }
 
