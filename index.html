@@ -5,12 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Advanced Password Generator</title>
     <link rel="stylesheet" href="./css/style.css" />
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
   </head>
 
   <body>
@@ -32,41 +38,57 @@
 
       <section class="generator-section">
         <div class="generator-box">
-          <div class="display-container">  
+          <div class="display-container">
             <input type="text" id="password-display" readonly />
             <div class="display-actions">
               <button id="refresh-btn">
                 <i class="fa-solid fa-arrows-rotate fa-lg"></i>
               </button>
               <button id="copy-btn">
-                 Copy <i class="fa-regular fa-copy"></i>
+                Copy <i class="fa-regular fa-copy"></i>
               </button>
             </div>
-          </div> 
-          
+          </div>
+
           <div class="badges">
             <span class="badge badge-strong">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 <polyline points="9 12 11 14 15 10" />
               </svg>
               Strong
             </span>
             <span class="badge badge-dark" id="crack-time">
-              Estimated Time to Crack: Centuries
+              Estimated Time to Crack :
+              <span> Centuries</span>
             </span>
           </div>
 
           <div class="controls-container">
-            <p class="controls-title">Strengthen Your Password with Ascella</p>
+            <p class="controls-title">
+              Strengthen Your Password with ASCELLA INFOSEC
+            </p>
 
             <div class="controls-grid">
-              
               <div class="control-group">
                 <label>Number of Passwords</label>
                 <div class="stepper">
                   <button id="qty-dec">-</button>
-                  <input type="number" id="qty-val" value="1" min="1" max="5" readonly />
+                  <input
+                    type="number"
+                    id="qty-val"
+                    value="1"
+                    min="1"
+                    max="5"
+                    readonly
+                  />
                   <button id="qty-inc">+</button>
                 </div>
               </div>
@@ -79,7 +101,7 @@
                   <span class="checkmark"></span>
                 </label>
               </div>
-              
+
               <div class="control-group">
                 <label>Lowercase</label>
                 <label class="toggle-pill" for="cb-lower">
@@ -88,7 +110,7 @@
                   <span class="checkmark"></span>
                 </label>
               </div>
-              
+
               <div class="control-group">
                 <label>Digits</label>
                 <label class="toggle-pill" for="cb-digits">
@@ -97,7 +119,7 @@
                   <span class="checkmark"></span>
                 </label>
               </div>
-              
+
               <div class="control-group">
                 <label>Special Case</label>
                 <label class="toggle-pill" for="cb-special">
@@ -106,7 +128,7 @@
                   <span class="checkmark"></span>
                 </label>
               </div>
-              
+
               <div class="control-group">
                 <label>Easy to Read</label>
                 <label class="toggle-pill" for="cb-exclude">
@@ -117,13 +139,25 @@
               </div>
             </div>
 
-            <div class="control-group length-slider-group" style="margin-top: 40px;">
-              <label style="display: flex; column-gap: 0.8%; margin-bottom: 10px; ">
-                <span style="font-size: 12px;">Length</span>
-                <span id="length-display-text" style="color: var(--text-main); font-weight: 600; font-size: 12px;">16</span>
+            <div
+              class="control-group length-slider-group"
+              style="margin-top: 40px"
+            >
+              <label
+                style="display: flex; column-gap: 0.8%; margin-bottom: 10px"
+              >
+                <span style="font-size: 12px">Length</span>
+                <span
+                  id="length-display-text"
+                  style="
+                    color: var(--text-main);
+                    font-weight: 600;
+                    font-size: 12px;
+                  "
+                ></span>
               </label>
-              
-              <div class="slider-with-buttons">
+
+              <!-- <div class="slider-with-buttons">
                 <button id="slider-dec" class="slider-btn">-</button>
                 
                 <div class="slider-container">
@@ -145,14 +179,44 @@
                 </div>
 
                 <button id="slider-inc" class="slider-btn">+</button>
+              </div> -->
+
+              <div class="slider-with-buttons">
+                <!-- <button id="slider-dec" class="slider-btn">-</button> -->
+
+                <div class="slider-container">
+                  <div id="slider-tooltip" class="slider-tooltip">
+                    Length 16
+                  </div>
+
+                  <!-- <input
+                    type="range"
+                    id="length-slider"
+                    min="6"
+                    max="20"
+                    value="16"
+                    step="1"
+                  /> -->
+                  <input type="range" id="length-slider" min="6" max="128" value="16" step="1" autocomplete="off" />
+                  <div class="slider-labels">
+                    <!-- <span class="lbl-6">6</span>
+                  <span class="lbl-12">12</span>
+                  <span class="lbl-16">16</span>
+                  <span class="lbl-20">20</span> -->
+                    <!-- <span class="lbl-64">64</span>
+                  <span class="lbl-128">128</span> -->
+                  </div>
+                </div>
+
+                <!-- <button id="slider-inc" class="slider-btn">+</button> -->
               </div>
             </div>
-
-            
           </div>
-          
-          <br>
-          <a href="bulk-index.html" class="btn-bulk"> Generate Bulk Passwords </a>
+
+          <br />
+          <a href="bulk-index.html" class="btn-bulk">
+            Generate Bulk Passwords
+          </a>
         </div>
       </section>
 
@@ -164,7 +228,14 @@
             <div class="mock-input success">
               (jKbaUYSB68292@$^SHWshs)
               <span class="success-text">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
                 Secured Password

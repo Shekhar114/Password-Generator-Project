@@ -1,21 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
+
   // DOM Elements
   const passwordDisplay = document.getElementById("password-display");
   const refreshBtn = document.getElementById("refresh-btn");
   const copyBtn = document.getElementById("copy-btn");
   const crackTimeDisplay = document.getElementById("crack-time");
-  const strengthBadge = document.querySelector(".badge-strong") || document.querySelector(".badge"); 
+  const strengthBadge = document.querySelector(".badge");
 
-  // Slider Elements
+  // Slider
   const lengthSlider = document.getElementById("length-slider");
-  const lengthDisplayText = document.getElementById("length-display-text");
-  const sliderDecBtn = document.getElementById("slider-dec");
-  const sliderIncBtn = document.getElementById("slider-inc");
-
-  // Quantity Stepper
-  const qtyVal = document.getElementById("qty-val");
-  const qtyDec = document.getElementById("qty-dec");
-  const qtyInc = document.getElementById("qty-inc");
+  const sliderTooltip = document.getElementById("slider-tooltip");
 
   // Checkboxes
   const cbUpper = document.getElementById("cb-upper");
@@ -33,98 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
     ambiguous: "0Oo1l|I",
   };
 
-  // Redirect Logic for Quantity (Number of Passwords)
-  qtyInc.addEventListener("click", () => {
-    window.location.href = "bulk-index.html";
-  });
-
-  qtyDec.addEventListener("click", () => {
-    qtyVal.value = 1; // Keep at 1
-  });
-
-  // Global strength variable
   let strengthText = "";
 
-  // Dynamic Strength Badge Logic 
-  function updateStrengthBadge(length) {
-    let checkedCount = 0;
-    if (cbUpper.checked) checkedCount++;
-    if (cbLower.checked) checkedCount++;
-    if (cbDigits.checked) checkedCount++;
-    if (cbSpecial.checked) checkedCount++;
-
-    const shieldSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
-
-    // Evaluate Strength Level
-    if (length < 8 || checkedCount === 0) {
-      strengthText = "Bad";
-    }
-    else if (checkedCount === 4 && length >= 20) {
-      strengthText = "Very Strong";
-    }
-    else if (checkedCount >= 2 && length >= 16) {
-      strengthText = "Strong";
-    }
-    else if (length < 12 || checkedCount === 1) {
-      strengthText = "Weak";
-    }
-    else {
-      strengthText = "Good";
-    }
-
-    // Update the Text and Icon
-    if(strengthBadge) {
-      strengthBadge.innerHTML = `${shieldSvg} ${strengthText}`;
-
-      // Reset any dynamic classes previously added
-      strengthBadge.classList.remove("badge-bad", "badge-weak", "badge-good", "badge-strong", "badge-very-strong");
-
-      // Apply the correct class based on the text
-      if (strengthText === "Bad" || strengthText === "Weak") {
-          strengthBadge.classList.add("badge-weak");
-      } else if (strengthText === "Good") {
-          strengthBadge.classList.add("badge-good");
-      } else if (strengthText === "Strong") {
-          strengthBadge.classList.add("badge-strong");
-      } else if (strengthText === "Very Strong") {
-          strengthBadge.classList.add("badge-very-strong");
-      }
-    }
-  }
-
-  // Rough Crack Time Estimation
-  function updateCrackTime() {
-    let estimate = "";
-
-    switch (strengthText) {
-      case "Bad":
-        estimate = "A few seconds";
-        break;
-      case "Weak":
-        estimate = "8 Minutes";
-        break;
-      case "Good":
-        estimate = "2 Years";
-        break;
-      case "Strong":
-        estimate = "150 Years";
-        break;
-      case "Very Strong":
-        estimate = "Centuries";
-        break;
-      default:
-        estimate = "Unknown";
-    }
-
-    crackTimeDisplay.textContent = `Estimated Time to Crack: ${estimate}`;
-  }
-
-  // Generator Logic
+  // =========================
+  // PASSWORD GENERATOR
+  // =========================
   function generatePassword() {
     const length = parseInt(lengthSlider.value);
     let charPool = "";
     let password = "";
-
     let activeSets = [];
 
     if (cbUpper.checked) {
@@ -144,116 +55,137 @@ document.addEventListener("DOMContentLoaded", () => {
       activeSets.push(CHAR_SETS.special);
     }
 
-    // Default Fallback
     if (charPool.length === 0) {
       charPool = CHAR_SETS.lower;
       activeSets.push(CHAR_SETS.lower);
     }
 
-    // Exclude ambiguous characters if checked
+    // Remove ambiguous
     if (cbExclude.checked) {
-      const ambiguousArray = CHAR_SETS.ambiguous.split("");
-      charPool = charPool
-        .split("")
-        .filter((char) => !ambiguousArray.includes(char))
-        .join("");
+      const amb = CHAR_SETS.ambiguous.split("");
+      charPool = charPool.split("").filter(c => !amb.includes(c)).join("");
 
-      activeSets = activeSets.map((set) =>
-        set
-          .split("")
-          .filter((char) => !ambiguousArray.includes(char))
-          .join(""),
+      activeSets = activeSets.map(set =>
+        set.split("").filter(c => !amb.includes(c)).join("")
       );
     }
 
-    // Guarantee at least one character from each selected set
-    activeSets.forEach((set) => {
+    // Ensure each set used
+    activeSets.forEach(set => {
       if (set.length > 0 && password.length < length) {
-        const randomChar = set[Math.floor(Math.random() * set.length)];
-        password += randomChar;
+        password += set[Math.floor(Math.random() * set.length)];
       }
     });
 
-    // Fill the rest randomly
+    // Fill remaining
     while (password.length < length) {
-      const randomChar = charPool[Math.floor(Math.random() * charPool.length)];
-      password += randomChar;
+      password += charPool[Math.floor(Math.random() * charPool.length)];
     }
 
-    // Shuffle the password
-    password = password
-      .split("")
-      .sort(() => 0.5 - Math.random())
-      .join("");
+    // Shuffle
+    password = password.split("").sort(() => 0.5 - Math.random()).join("");
 
     passwordDisplay.value = password;
 
-    // Evaluate Strength and Update UI
-    updateStrengthBadge(length);
-    updateCrackTime(); 
+    updateStrength(length);
+    updateCrackTime();
   }
 
-  // --- SLIDER & BUTTON LOGIC ---
-  
-  // Visual update logic for the slider
-  function updateSliderVisuals() {
-    lengthDisplayText.textContent = lengthSlider.value;
-    
-    // Calculate percentage for the white background fill
-    const percentage = ((lengthSlider.value - lengthSlider.min) / (lengthSlider.max - lengthSlider.min)) * 100;
-    
-    // Create the white line fill effect
-    lengthSlider.style.background = `linear-gradient(to right, #ffffff ${percentage}%, #333333 ${percentage}%)`;
-    
-    // Generate new password
+  // =========================
+  // STRENGTH LOGIC
+  // =========================
+  function updateStrength(length) {
+    let count = 0;
+    if (cbUpper.checked) count++;
+    if (cbLower.checked) count++;
+    if (cbDigits.checked) count++;
+    if (cbSpecial.checked) count++;
+
+    if (length < 8 || count === 0) strengthText = "Weak";
+    else if (count === 4 && length >= 20) strengthText = "Very Strong";
+    else if (count >= 2 && length >= 16) strengthText = "Strong";
+    else strengthText = "Good";
+
+    strengthBadge.textContent = strengthText;
+
+    strengthBadge.className = "badge";
+
+    if (strengthText === "Weak") strengthBadge.classList.add("badge-weak");
+    if (strengthText === "Good") strengthBadge.classList.add("badge-good");
+    if (strengthText === "Strong") strengthBadge.classList.add("badge-strong");
+    if (strengthText === "Very Strong") strengthBadge.classList.add("badge-very-strong");
+  }
+
+  // =========================
+  // CRACK TIME
+  // =========================
+  function updateCrackTime() {
+    let time = "";
+
+    switch (strengthText) {
+      case "Weak": time = "Minutes"; break;
+      case "Good": time = "Years"; break;
+      case "Strong": time = "100+ Years"; break;
+      case "Very Strong": time = "Centuries"; break;
+      default: time = "Unknown";
+    }
+
+    crackTimeDisplay.textContent = "Estimated Time to Crack: " + time;
+  }
+
+  // =========================
+  // SLIDER VISUAL
+  // =========================
+  function updateSlider() {
+    const value = lengthSlider.value;
+    const min = lengthSlider.min;
+    const max = lengthSlider.max;
+
+    const percent = ((value - min) / (max - min)) * 100;
+
+    // Fill track
+    lengthSlider.style.background =
+      `linear-gradient(to right, #ffffff ${percent}%, #333333 ${percent}%)`;
+
+    // Tooltip text
+    sliderTooltip.textContent = "Length " + value;
+
+    // Tooltip position FIXED PERFECT
+    const sliderWidth = lengthSlider.offsetWidth;
+    const thumbWidth = 20;
+
+    const position = (percent / 100) * (sliderWidth - thumbWidth) + thumbWidth / 2;
+
+    sliderTooltip.style.left = position + "px";
+
     generatePassword();
   }
 
-  // Listen for manual slider drags
-  lengthSlider.addEventListener("input", updateSliderVisuals);
+  // =========================
+  // EVENTS
+  // =========================
+  lengthSlider.addEventListener("input", updateSlider);
 
-  // Minus Button Click
-  sliderDecBtn.addEventListener("click", () => {
-    let currentValue = parseInt(lengthSlider.value);
-    let min = parseInt(lengthSlider.min);
-    
-    if (currentValue > min) {
-      lengthSlider.value = currentValue - 1;
-      updateSliderVisuals();
-    }
-  });
-
-  // Plus Button Click
-  sliderIncBtn.addEventListener("click", () => {
-    let currentValue = parseInt(lengthSlider.value);
-    let max = parseInt(lengthSlider.max);
-    
-    if (currentValue < max) {
-      lengthSlider.value = currentValue + 1;
-      updateSliderVisuals();
-    }
-  });
-
-  // Copy to Clipboard
-  copyBtn.addEventListener("click", () => {
-    if (!passwordDisplay.value) return;
-
-    navigator.clipboard.writeText(passwordDisplay.value).then(() => {
-      const originalText = copyBtn.innerHTML;
-      copyBtn.innerHTML = `Copied! <i class="fa-solid fa-check"></i>`;
-      setTimeout(() => {
-        copyBtn.innerHTML = originalText;
-      }, 1000);
-    });
-  });
-
-  // Event Listeners for checkboxes
-  [cbUpper, cbLower, cbDigits, cbSpecial, cbExclude].forEach((checkbox) => {
-    checkbox.addEventListener("change", generatePassword);
+  [cbUpper, cbLower, cbDigits, cbSpecial, cbExclude].forEach(cb => {
+    cb.addEventListener("change", generatePassword);
   });
 
   refreshBtn.addEventListener("click", generatePassword);
 
-  // Initial setup on load
-  updateSliderVisuals();
+  copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(passwordDisplay.value);
+    copyBtn.textContent = "Copied!";
+    setTimeout(() => (copyBtn.textContent = "Copy"), 1000);
+  });
+
+  // =========================
+  // PERFECT INITIAL LOAD
+  // =========================
+  window.addEventListener("load", () => {
+    requestAnimationFrame(() => {
+      lengthSlider.value = 16;
+      updateSlider();
+    });
+  });
+
 });

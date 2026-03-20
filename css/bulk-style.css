@@ -7,7 +7,7 @@
     --accent: #ffffff;
     --border-color: #222222;
     --success: #4ade80;
-    --font-family: 'Montserrat', sans-serif;
+    --font-family: 'Montserrat';
 }
 
 * {
@@ -50,7 +50,7 @@ body {
     font-size: 32px;
     font-weight: 600;
     margin-bottom: 16px;
-    letter-spacing: -0.5px;
+    letter-spacing: -2px;
 }
 
 .page-header p {
@@ -66,6 +66,7 @@ body {
     border-radius: 8px;
     padding: 40px;
     margin-bottom: 60px;
+    text-align: start;
 }
 
 .controls-title {
@@ -284,16 +285,19 @@ body {
     min-height: 200px;
     max-height: 400px;
     overflow-y: auto;
+   
 }
 
 #bulk-display {
     display: flex;
     flex-direction: column;
+    align-items: start;
     gap: 12px;
     font-family: monospace;
     font-size: 15px;
     color: var(--text-main);
     letter-spacing: 0.5px;
+    
 }
 
 .pwd-item {
@@ -420,12 +424,52 @@ body {
 /* =========================================
    Slider With Buttons Layout
    ========================================= */
-.slider-with-buttons {
+/* .slider-with-buttons {
     display: flex;
     align-items: flex-start; 
     gap: 15px;
     width: 100%;
+} */
+
+/* Make room for the tooltip above the slider */
+.slider-container {
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
+    padding-top: 2.5%;
+    /* padding-top: 35px; Increased to fit tooltip */
 }
+
+/* The Tooltip Box */
+.slider-tooltip {
+    position: absolute;
+    top: 0;
+    left: 50%; /* JS will override this */
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    color: #000000;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    pointer-events: none; /* Lets you click "through" it to grab the slider */
+    transition: left 0.1s ease-out; /* Smooth tracking */
+    z-index: 10;
+}
+
+/* The Downward Arrow on the Tooltip */
+.slider-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; /* Position below the box */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+}
+
 
 .slider-btn {
     background: #1a1a1a;
@@ -514,4 +558,13 @@ input[type=range]::-webkit-slider-runnable-track {
     width: 1px;
     height: 6px;
     background-color: var(--text-muted);
+}
+
+/* Ensure the container takes up the remaining space */
+.slider-container {
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
+    /* padding-top: 8px; Adjusted padding */
+    padding-top: 2.5%;
 }

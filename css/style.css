@@ -47,8 +47,8 @@ body {
 }
 
 .page-header h1 {
-    font-size: 32;
-    font-weight: 500;
+    font-size: 32px;
+    font-weight: 500px;
     margin-bottom: 16px;
     letter-spacing: -2%;
 }
@@ -84,7 +84,7 @@ body {
     font-size: 28px;
     width: 100%;
     outline: none;
-    letter-spacing: -2px;
+    letter-spacing: -2%;
     line-height: 48px;
 }
 
@@ -488,10 +488,48 @@ body {
 /* =========================================
    Custom Range Slider
    ========================================= */
-.slider-container {
+/* .slider-container {
     position: relative;
     width: 100%;
     padding-top: 10px;
+} */
+
+/* Make room for the tooltip above the slider */
+.slider-container {
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
+    /* padding-top: 35px; Increased to fit tooltip */
+}
+
+/* The Tooltip Box */
+.slider-tooltip {
+    position: absolute;
+    top: 0;
+    left: 50%; /* JS will override this */
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    color: #000000;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    pointer-events: none; /* Lets you click "through" it to grab the slider */
+    transition: left 0.1s ease-out; /* Smooth tracking */
+    z-index: 10;
+}
+
+/* The Downward Arrow on the Tooltip */
+.slider-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; /* Position below the box */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
 }
 
 input[type=range] {
@@ -596,5 +634,6 @@ input[type=range]::-webkit-slider-runnable-track {
     flex-grow: 1;
     position: relative;
     width: 100%;
-    padding-top: 8px; /* Adjusted padding */
+    /* padding-top: 8px; Adjusted padding */
+    padding-top: 2.5%;
 }
