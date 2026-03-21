@@ -66,9 +66,12 @@
               Strong
             </span>
             <span class="badge badge-dark" id="crack-time">
-              Estimated Time to Crack :
-              <span> Centuries</span>
-            </span>
+              Estimated Time to Crack :</span
+            >
+            <!-- <span id="time-name"> Centuries</span> -->
+            <!-- <div class="time-to-crack">
+            Estimated Time to Crack: <span id="timeToCrack">Few Seconds</span>
+          </div> -->
           </div>
 
           <div class="controls-container">
@@ -86,7 +89,7 @@
                     id="qty-val"
                     value="1"
                     min="1"
-                    max="5"
+                    max="56"
                     readonly
                   />
                   <button id="qty-inc">+</button>
@@ -124,7 +127,7 @@
                 <label>Special Case</label>
                 <label class="toggle-pill" for="cb-special">
                   #@*
-                  <input type="checkbox" id="cb-special" />
+                  <input type="checkbox" id="cb-special" checked />
                   <span class="checkmark"></span>
                 </label>
               </div>
@@ -157,30 +160,6 @@
                 ></span>
               </label>
 
-              <!-- <div class="slider-with-buttons">
-                <button id="slider-dec" class="slider-btn">-</button>
-                
-                <div class="slider-container">
-                  <input type="range" id="length-slider" min="4" max="70" value="16" step="1" />
-                <div class="slider-labels">
-                  <span>4</span>
-                  <span>10</span>
-                  <span>16</span>
-                  <span>22</span>
-                  <span>28</span>
-                  <span>34</span>
-                  <span>40</span>
-                  <span>46</span>
-                  <span>52</span>
-                  <span>58</span>
-                  <span>64</span>
-                  <span>70</span>
-                </div>
-                </div>
-
-                <button id="slider-inc" class="slider-btn">+</button>
-              </div> -->
-
               <div class="slider-with-buttons">
                 <!-- <button id="slider-dec" class="slider-btn">-</button> -->
 
@@ -189,22 +168,22 @@
                     Length 16
                   </div>
 
-                  <!-- <input
+                  <input
                     type="range"
                     id="length-slider"
                     min="6"
-                    max="20"
+                    max="56"
                     value="16"
-                    step="1"
-                  /> -->
-                  <input type="range" id="length-slider" min="6" max="128" value="16" step="1" autocomplete="off" />
+                    step="10"
+                    autocomplete="off"
+                  />
                   <div class="slider-labels">
-                    <!-- <span class="lbl-6">6</span>
-                  <span class="lbl-12">12</span>
-                  <span class="lbl-16">16</span>
-                  <span class="lbl-20">20</span> -->
-                    <!-- <span class="lbl-64">64</span>
-                  <span class="lbl-128">128</span> -->
+                    <span class="lbl-6">6</span>
+                    <span class="lbl-16">16</span>
+                    <span class="lbl-26">26</span>
+                    <span class="lbl-36">36</span>
+                    <span class="lbl-46">46</span>
+                    <span class="lbl-56">56</span>
                   </div>
                 </div>
 

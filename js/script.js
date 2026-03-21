@@ -130,7 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
       default: time = "Unknown";
     }
 
-    crackTimeDisplay.textContent = "Estimated Time to Crack: " + time;
+    // crackTimeDisplay.textContent = "Estimated Time to Crack : " + time;
+    crackTimeDisplay.innerHTML = "Estimated Time to Crack : <strong>" + time + "</strong>";
   }
 
   // =========================

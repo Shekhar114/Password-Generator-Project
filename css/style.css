@@ -141,7 +141,7 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-weight: 600;
+    /* font-weight: 600; */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -150,24 +150,28 @@ body {
     background-color: #ef4444; /* Red */
     color: #ffffff;
     border: 1px solid #dc2626;
+    font-weight: 800;
 }
 
 .badge-good {
     background-color: #f59e0b; /* Orange */
     color: #ffffff;
     border: 1px solid #d97706;
+    font-weight: 800;
 }
 
 .badge-strong {
     background-color: #eab308; /* Yellow */
-    color: #000000; /* Dark text for contrast on yellow */
+    color: #ffffff;
     border: 1px solid #ca8a04;
+    font-weight: 800;
 }
 
 .badge-very-strong {
     background-color: #22c55e; /* Green */
-    color: #000000; /* Dark text for contrast on green */
+    color: #ffffff;
     border: 1px solid #16a34a;
+    font-weight: 800;
 }
 
 /* The dark badge next to it */
@@ -527,7 +531,7 @@ body {
     bottom: -5px; /* Position below the box */
     left: 50%;
     transform: translateX(-50%);
-    border-width: 5px 5px 0;
+    border-width: 10px 5px 0;
     border-style: solid;
     border-color: #ffffff transparent transparent transparent;
 }
@@ -562,7 +566,7 @@ input[type=range]::-webkit-slider-thumb:hover {
 /* Invisible track */
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
-    height: 4px;
+    height: 5px;
     cursor: pointer;
     background: transparent; 
 }
